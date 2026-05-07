@@ -5,6 +5,8 @@ import '../subjects/providers/subject_provider.dart';
 import '../topics/providers/topic_provider.dart';
 import '../scheduling/providers/schedule_provider.dart';
 import '../../../models/topic_model.dart';
+import '../../../core/providers/auth_provider.dart';
+import '../../../services/notification_service.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -18,6 +20,7 @@ class DashboardScreen extends ConsumerWidget {
     final totalSubjects = subjects.length;
     final totalTopics = topics.length;
     final completedTopics = topics.where((t) => t.status == TopicStatus.completed).length;
+    final username = ref.watch(authProvider) ?? 'Student';
 
     final today = DateTime.now();
     final todaySchedules = schedules.where((s) =>
@@ -37,9 +40,21 @@ class DashboardScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
               ),
-              child: const Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30,
+                    child: Icon(Icons.person, size: 40, color: Theme.of(context).colorScheme.primary),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Hello, $username!',
+                    style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
             ListTile(
@@ -86,6 +101,27 @@ class DashboardScreen extends ConsumerWidget {
               onTap: () {
                 context.pop();
                 context.push('/settings');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications_active),
+              title: const Text('Trigger Reminder'),
+              onTap: () {
+                NotificationService().init();
+                NotificationService().scheduleDailyReminder();
+                context.pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Reminder notification triggered!')),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Logout', style: TextStyle(color: Colors.red)),
+              onTap: () {
+                ref.read(authProvider.notifier).logout();
+                context.go('/');
               },
             ),
           ],

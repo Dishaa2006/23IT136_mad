@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../features/auth/screens/splash_login_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/subjects/screens/subject_list_screen.dart';
 import '../features/topics/screens/topic_form_screen.dart';
@@ -13,6 +14,10 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      builder: (context, state) => const SplashLoginScreen(),
+    ),
+    GoRoute(
+      path: '/dashboard',
       builder: (context, state) => const DashboardScreen(),
     ),
     GoRoute(

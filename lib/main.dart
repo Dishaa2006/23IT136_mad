@@ -24,6 +24,7 @@ void main() async {
   await Hive.openBox<SubjectModel>('subjects');
   await Hive.openBox<TopicModel>('topics');
   await Hive.openBox<ScheduleModel>('schedules');
+  await Hive.openBox('settings');
 
   runApp(
     const ProviderScope(
