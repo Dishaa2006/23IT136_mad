@@ -56,6 +56,14 @@ class DashboardScreen extends ConsumerWidget {
               },
             ),
             ListTile(
+              leading: const Icon(Icons.topic),
+              title: const Text('Topics & Search'),
+              onTap: () {
+                context.pop();
+                context.push('/topics');
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.calendar_month),
               title: const Text('Study Schedule'),
               onTap: () {
@@ -69,6 +77,15 @@ class DashboardScreen extends ConsumerWidget {
               onTap: () {
                 context.pop();
                 context.push('/progress');
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                context.pop();
+                context.push('/settings');
               },
             ),
           ],
