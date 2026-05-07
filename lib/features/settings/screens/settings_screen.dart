@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import '../../../core/providers/theme_provider.dart';
-import '../../../models/subject_model.dart';
-import '../../../models/topic_model.dart';
-import '../../../models/schedule_model.dart';
+import '../../subjects/providers/subject_provider.dart';
+import '../../topics/providers/topic_provider.dart';
+import '../../scheduling/providers/schedule_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -79,9 +78,10 @@ class SettingsScreen extends ConsumerWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                       onPressed: () async {
-                        await Hive.box<SubjectModel>('subjects').clear();
-                        await Hive.box<TopicModel>('topics').clear();
-                        await Hive.box<ScheduleModel>('schedules').clear();
+                        await ref.read(subjectProvider.notifier).clearAll();
+                        await ref.read(topicProvider.notifier).clearAll();
+                        await ref.read(scheduleProvider.notifier).clearAll();
+                        
                         if (context.mounted) {
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(

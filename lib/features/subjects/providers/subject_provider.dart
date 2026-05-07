@@ -32,4 +32,9 @@ class SubjectNotifier extends StateNotifier<List<SubjectModel>> {
     await _box.delete(id);
     state = _box.values.toList();
   }
+
+  Future<void> clearAll() async {
+    await _box.clear();
+    state = [];
+  }
 }

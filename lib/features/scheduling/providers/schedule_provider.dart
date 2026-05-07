@@ -47,4 +47,9 @@ class ScheduleNotifier extends StateNotifier<List<ScheduleModel>> {
     await _box.delete(id);
     state = _box.values.toList();
   }
+
+  Future<void> clearAll() async {
+    await _box.clear();
+    state = [];
+  }
 }
