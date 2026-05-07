@@ -7,6 +7,7 @@ import 'core/providers/theme_provider.dart';
 import 'models/subject_model.dart';
 import 'models/topic_model.dart';
 import 'models/schedule_model.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

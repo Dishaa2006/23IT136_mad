@@ -13,6 +13,9 @@ class DashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Make this screen's context available for web notification dialogs
+    notificationContext = context;
+
     final subjects = ref.watch(subjectProvider);
     final topics = ref.watch(topicProvider);
     final schedules = ref.watch(scheduleProvider);

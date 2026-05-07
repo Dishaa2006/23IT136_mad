@@ -134,7 +134,6 @@ class _ScheduleCalendarScreenState extends ConsumerState<ScheduleCalendarScreen>
                         selectedTopicId != null &&
                         durationController.text.isNotEmpty) {
                       final duration = int.parse(durationController.text);
-                      // Adjust selectedTime to ensure it falls on _selectedDate
                       final finalDateTime = DateTime(
                         _selectedDate.year,
                         _selectedDate.month,
@@ -142,6 +141,34 @@ class _ScheduleCalendarScreenState extends ConsumerState<ScheduleCalendarScreen>
                         selectedTime.hour,
                         selectedTime.minute,
                       );
+
+                      // ✅ Block scheduling in the past
+                      if (finalDateTime.isBefore(DateTime.now())) {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Row(
+                              children: const [
+                                Icon(Icons.warning_amber_rounded, color: Colors.orange),
+                                SizedBox(width: 8),
+                                Text('Past Date/Time'),
+                              ],
+                            ),
+                            content: const Text(
+                              'You cannot schedule a session in the past.\n\n'
+                              'Please select a future date and time so we can remind you!',
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () => Navigator.pop(ctx),
+                                child: const Text('OK, Got it!'),
+                              ),
+                            ],
+                          ),
+                        );
+                        return;
+                      }
+
                       ref.read(scheduleProvider.notifier).addSchedule(
                             selectedSubjectId!,
                             selectedTopicId!,
