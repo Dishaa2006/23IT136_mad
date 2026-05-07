@@ -64,8 +64,8 @@ class _ScheduleCalendarScreenState extends ConsumerState<ScheduleCalendarScreen>
                     DropdownButtonFormField<String>(
                       value: selectedSubjectId,
                       hint: const Text('Select Subject'),
-                      items: subjects.map((s) {
-                        return DropdownMenuItem(value: s.id, child: Text(s.name));
+                      items: subjects.map<DropdownMenuItem<String>>((s) {
+                        return DropdownMenuItem<String>(value: s.id, child: Text(s.name));
                       }).toList(),
                       onChanged: (val) {
                         setStateDialog(() {
@@ -78,8 +78,8 @@ class _ScheduleCalendarScreenState extends ConsumerState<ScheduleCalendarScreen>
                     DropdownButtonFormField<String>(
                       value: selectedTopicId,
                       hint: const Text('Select Topic'),
-                      items: availableTopics.map((t) {
-                        return DropdownMenuItem(value: t.id, child: Text(t.name));
+                      items: availableTopics.map<DropdownMenuItem<String>>((t) {
+                        return DropdownMenuItem<String>(value: t.id, child: Text(t.name));
                       }).toList(),
                       onChanged: selectedSubjectId == null
                           ? null
