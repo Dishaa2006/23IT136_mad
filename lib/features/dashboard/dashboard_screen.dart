@@ -28,14 +28,51 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Smart Study Planner'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // TODO: Navigate to settings
-            },
-          )
-        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: const Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard),
+              title: const Text('Dashboard'),
+              onTap: () => context.pop(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.book),
+              title: const Text('Manage Subjects'),
+              onTap: () {
+                context.pop();
+                context.push('/subjects');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.calendar_month),
+              title: const Text('Study Schedule'),
+              onTap: () {
+                context.pop();
+                context.push('/schedule');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.pie_chart),
+              title: const Text('Progress Tracking'),
+              onTap: () {
+                context.pop();
+                context.push('/progress');
+              },
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -66,7 +103,42 @@ class DashboardScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Open bottom sheet to choose what to add (Subject, Topic, Schedule)
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.book),
+                      title: const Text('Add Subject'),
+                      onTap: () {
+                        context.pop();
+                        context.push('/subjects');
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.topic),
+                      title: const Text('Add Topic'),
+                      onTap: () {
+                        context.pop();
+                        context.push('/topics/add');
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.schedule),
+                      title: const Text('Schedule Session'),
+                      onTap: () {
+                        context.pop();
+                        context.push('/schedule');
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         },
         child: const Icon(Icons.add),
       ),
