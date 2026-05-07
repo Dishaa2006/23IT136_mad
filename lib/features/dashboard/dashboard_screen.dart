@@ -305,6 +305,7 @@ class DashboardScreen extends ConsumerWidget {
     }
 
     final recommendedTopic = pendingTopics.first; // Simple logic: pick first pending
+    final isNotStarted = recommendedTopic.status == TopicStatus.notStarted;
 
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
@@ -326,15 +327,33 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Next pending topic',
+                    isNotStarted ? 'Next pending topic' : 'Continue studying',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: const Text('Start'),
+              onPressed: () {
+                if (isNotStarted) {
+                  ref.read(topicProvider.notifier).updateTopicStatus(
+                        recommendedTopic.id,
+                        TopicStatus.inProgress,
+                      );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Started: ${recommendedTopic.name}')),
+                  );
+                } else {
+                  ref.read(topicProvider.notifier).updateTopicStatus(
+                        recommendedTopic.id,
+                        TopicStatus.completed,
+                      );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Completed: ${recommendedTopic.name} 🎉')),
+                  );
+                }
+              },
+              child: Text(isNotStarted ? 'Start' : 'Finish'),
             ),
           ],
         ),
