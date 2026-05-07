@@ -1,0 +1,53 @@
+name: smart_study_planner
+description: Smart Study Planner & Exam Preparation Tracker.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
+  # State Management & Dependency Injection
+  flutter_riverpod: ^2.5.1
+  
+  # Navigation
+  go_router: ^13.2.0
+  
+  # Database (Local Storage - Offline First)
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  
+  # UI & Charts
+  fl_chart: ^0.66.0
+  google_fonts: ^6.2.1
+  intl: ^0.20.2
+  
+  # Notifications
+  flutter_local_notifications: ^17.1.1
+  
+  # Connectivity
+  connectivity_plus: ^5.0.2
+  
+  # Optional Cloud Sync
+  firebase_core: ^2.27.0
+  cloud_firestore: ^4.15.8
+
+  uuid: ^4.3.3
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  
+  # Code Generation
+  build_runner: ^2.4.8
+  hive_generator: ^2.0.1
+
+flutter:
+  uses-material-design: true
